@@ -1,65 +1,106 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { Heart } from "lucide-react";
+
+export default function Envelope() {
+  const router = useRouter();
+  const [isOpening, setIsOpening] = useState(false);
+
+  const handleOpenInvitation = () => {
+    setIsOpening(true);
+    setTimeout(() => {
+      router.push("/home");
+    }, 1100);
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <motion.main
+      initial={{ opacity: 1 }}
+      animate={isOpening ? { opacity: 0 } : { opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      className="relative min-h-screen w-full overflow-hidden bg-[#FAF9F6] flex items-center justify-center cursor-pointer"
+      onClick={handleOpenInvitation}
+    >
+      {/* Background Texture - Handmade Paper Feel */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')]" />
+
+      <motion.div
+        initial={{ y: 40, opacity: 0 }}
+        animate={isOpening ? { y: -80, opacity: 0, scale: 1.05 } : { y: 0, opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 w-[88%] max-w-[480px] aspect-[1.4/1]"
+      >
+        {/* Main Envelope Body */}
+        <div className="absolute inset-0 bg-white shadow-[0_40px_100px_rgba(58,77,57,0.06)] border border-[#E5D3B3]/30 rounded-sm" />
+
+        {/* --- THE REFINED TOP SECTION (Names) --- */}
+        <div className="absolute top-0 left-0 right-0 h-1/2 flex items-center justify-center">
+          <motion.div 
+            animate={isOpening ? { y: -20, opacity: 0 } : { y: 0, opacity: 1 }}
+            className="text-center"
+          >
+            <h1 className="font-honey text-5xl md:text-6xl text-[#3A4D39] leading-tight">
+              Sarah & Michael
+            </h1>
+            <div className="flex items-center justify-center gap-3 mt-2 opacity-40">
+          
+            </div>
+          </motion.div>
+        </div>
+
+        {/* --- THE LOWER FLAP (The Pocket) --- */}
+        <div 
+          className="absolute inset-0 z-20 border-t border-white/40 shadow-[-10px_-10px_30px_rgba(0,0,0,0.02)]"
+          style={{ 
+            clipPath: 'polygon(0 50%, 50% 100%, 100% 50%, 100% 100%, 0 100%)', 
+            background: 'linear-gradient(180deg, #FAF9F6 0%, #F5F1E8 100%)' 
+          }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* --- THE SIGNATURE WAX SEAL --- */}
+        <div className="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
+          <motion.div
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            className="relative"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+            <div className="w-14 h-14 bg-[#3A4D39] rounded-full shadow-2xl flex items-center justify-center border-4 border-[#3A4D39]">
+              <Heart size={20} className="text-[#FAF9F6] opacity-90" fill="currentColor" />
+            </div>
+            
+            {/* Pulsing Hint Around Seal */}
+            <motion.div 
+              animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0, 0.2] }}
+              transition={{ repeat: Infinity, duration: 2.5 }}
+              className="absolute inset-0 bg-[#3A4D39] rounded-full -z-10"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </motion.div>
         </div>
-      </main>
-    </div>
+
+        {/* Tiny Date at the Bottom */}
+        <div className="absolute bottom-6 left-0 right-0 text-center z-40">
+           <p className="text-[9px] tracking-[0.3em] uppercase text-[#3A4D39] opacity-30 font-bold">
+             12 . 12 . 26
+           </p>
+        </div>
+      </motion.div>
+
+      {/* Modern Interaction Instruction */}
+      <motion.div
+        animate={isOpening ? { opacity: 0 } : { opacity: 1 }}
+        className="absolute bottom-12 flex flex-col items-center gap-4"
+      >
+        <p className="text-[10px] tracking-[0.4em] uppercase text-[#3A4D39] font-bold">
+          Open Invitation
+        </p>
+        <motion.div 
+          animate={{ height: [40, 10, 40] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="w-px h-10 bg-gradient-to-b from-[#3A4D39] to-transparent" 
+        />
+      </motion.div>
+    </motion.main>
   );
 }
