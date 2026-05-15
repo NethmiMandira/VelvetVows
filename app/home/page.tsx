@@ -153,7 +153,7 @@ export default function NextGenWedding() {
       <section className="relative min-h-[100svh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-4 md:px-0">
         <motion.div style={{ scale: heroScale, y: heroY }} className="absolute inset-0 z-0">
           <Image
-            src="/cpl16.jpg" 
+            src="/cpl17.png" 
             alt="Sarah & Michael"
             fill
             className="object-cover opacity-95 grayscale-[10%] contrast-[1.05]"
